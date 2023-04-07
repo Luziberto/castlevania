@@ -1,0 +1,65 @@
+ * {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+button {
+    appearance: none;
+}
+
+.sidebar {
+    width: calc((100vw - 100% - 66px - 60px) / 2);
+    height: 100vh;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    background-image: url("/public/images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50%;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1236px;
+    margin: 0 auto;
+    width: 85%;
+    gap: 10px;
+    }
+
+button {
+    font-family: 'Rubik', sans-serif;
+}
+
+.btn {
+    text-transform: capitalize;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.btn-outlined {
+    background-color: transparent;
+    border: 1px solid white;
+}
+
+.btn-signin {
+    background-color: var(--theme-accent-color);
+    border: none;
+}
+
+.btn>img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    color: white;
+}
