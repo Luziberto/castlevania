@@ -15,7 +15,7 @@ button {
 body {
     margin: 0px;
     padding: 0px;
-    background-image: url("/public/images/background.jpg");
+    background-image: url("../../public/images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
