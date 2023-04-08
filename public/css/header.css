@@ -44,5 +44,5 @@
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-image: url("/public/svg/arrow-down.svg");
+    background-image: url("public/svg/arrow-down.svg");
 }
