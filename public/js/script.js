@@ -2,7 +2,6 @@ window.onload = () => {
     includeHtml('navbar')
     includeHtml('header')
     includeHtml('main')
-    includeHtml('carousel')
 }
 
 function includeHtml(id) {

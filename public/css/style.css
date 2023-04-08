@@ -3,6 +3,11 @@
     font-family: rubik, helvetica, arial, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
 button {
     appearance: none;
 }
@@ -49,7 +54,7 @@ body {
 }
 
 .btn-signin {
-    background-color: var(--theme-accent-color);
+    background-color: var(--theme-alert-color--secondary);
     border: none;
 }
 
