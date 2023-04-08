@@ -36,7 +36,6 @@
 .header-top-menu-item-title {
     font-size: 13px;
     font-weight: 700;
-    color: var(--theme-page-text-color);
 }
 
 .header-top-menu-item::after {
