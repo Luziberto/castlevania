@@ -1,6 +1,6 @@
  * {
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: rubik, helvetica, arial, sans-serif;
 }
 
 button {
@@ -29,10 +29,6 @@ body {
     margin: 0 auto;
     width: 85%;
     gap: 10px;
-    }
-
-button {
-    font-family: 'Rubik', sans-serif;
 }
 
 .btn {

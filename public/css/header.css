@@ -25,7 +25,6 @@
 .header-container-top-title {
     font-size: 1.35rem;
     font-weight: 500;
-    font-family: rubik;
 }
 
  .header-top-menu {
@@ -36,7 +35,8 @@
 
 .header-top-menu-item-title {
     font-size: 13px;
-    font-family: rubik, helvetica, arial, sans-serif;
+    font-weight: 700;
+    color: var(--theme-page-text-color);
 }
 
 .header-top-menu-item::after {

@@ -75,6 +75,51 @@
     --theme-link-decoration: underline;
 }
 
+:root {
+    --fandom-global-nav-background-color: #ffc500;
+    --fandom-global-nav-text-color: #1e0c1b;
+    --fandom-global-nav-link-color: #520044;
+    --fandom-global-nav-link-color--hover: #b80099;
+    --fandom-global-nav-icon-color: #fa005a;
+    --fandom-global-nav-icon-background-color: #f9edd8;
+    --fandom-global-nav-icon-background-color--hover: #f9edd8;
+    --fandom-global-nav-icon-background-color--active: #fff;
+    --fandom-global-nav-icon-border-color: #520044;
+    --fandom-global-nav-icon-border-color--hover: rgba(82,0,68,.5);
+    --fandom-global-nav-icon-border-color--active: #520044;
+    --fandom-global-nav-bottom-icon-color: #520044;
+    --fandom-global-nav-counter-background-color: #520044;
+    --fandom-global-nav-counter-label-color: #fff;
+    --fandom-global-nav-mobile-background-color: var(--fandom-global-nav-background-color);
+    --fandom-global-nav-mobile-logo: url(/resources-ucp/v2/dist/svg/wds-brand-fandom-logo.svg);
+    --fandom-global-nav-mobile-logo-background: #f5f3f5;
+    --fandom-global-nav-mobile-community-sticky-bar-background-color: var(--theme-sticky-nav-background-color);
+    --fandom-global-nav-mobile-community-sticky-bar-color: var(--theme-sticky-nav-text-color);
+    --fandom-global-nav-mobile-community-sticky-bar-color--hover: var(--theme-sticky-nav-text-color--hover);
+    --fandom-global-nav-mobile-community-bar-background-color: var(--theme-sticky-nav-background-color);
+    --fandom-global-nav-mobile-community-bar-color: var(--theme-sticky-nav-text-color);
+    --fandom-global-nav-mobile-community-bar-color--hover: var(--theme-sticky-nav-text-color--hover);
+    --fandom-global-nav-mobile-community-bottom-border-color: #d6d0d5;
+    --fandom-global-nav-search-active-link-background-color: #fff;
+    --fandom-global-nav-search-active-link-border-color: #520044;
+    --fandom-global-nav-mobile-logo-separator-color: transparent;
+    --fandom-global-nav-separator-color: rgba(30,12,27,.25);
+    --fandom-global-nav-gp-legacy-logo: url(/resources-ucp/v2/dist/svg/wds-brand-gamepedia-badge-orange.svg);
+    --fandom-global-nav-border-top-width: 0;
+    --fandom-global-nav-overflow-shadow-color: rgba(30,12,27,.3)
+}
+
+:root .fandommobile-fandom-theme,:root .mobile-community-bar--mobile-theming-disabled,:root .mobile-global-navigation--mobile-theming-disabled {
+    --fandom-global-nav-mobile-logo-background: var(--fandom-global-nav-background-color);
+    --fandom-global-nav-mobile-community-sticky-bar-background-color: var(--fandom-global-nav-background-color);
+    --fandom-global-nav-mobile-community-sticky-bar-color: var(--fandom-global-nav-link-color);
+    --fandom-global-nav-mobile-community-sticky-bar-color--hover: var(--fandom-global-nav-link-color--hover);
+    --fandom-global-nav-mobile-community-bar-background-color: transparent;
+    --fandom-global-nav-mobile-community-bar-color: var(--theme-body-text-color);
+    --fandom-global-nav-mobile-community-bar-color--hover: var(--theme-body-text-color);
+    --fandom-global-nav-mobile-logo-separator-color: var(--fandom-global-nav-link-color)
+}
+
 .skin-fandomdesktop .CodeMirror {
     --codemirror-yellow: #ffd700;
     --codemirror-light-blue: #adf;
