@@ -15,6 +15,7 @@
 .carousel-overlay-content p{
     font-weight: 300;
     font-size: 13px;
+    margin: 0px;
 }
 
 .carousel-overlay-content .content-link {

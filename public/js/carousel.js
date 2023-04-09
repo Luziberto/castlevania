@@ -57,7 +57,7 @@ class Carousel {
         
         if (this._currentItem === 1 && direction === 'previous') return this.changeItem(this.#_lastItem)
 
-        if (this._currentItem === this.#_lastItem && direction === 'next') return this.changeItem(0)
+        if (this._currentItem === this.#_lastItem && direction === 'next') return this.changeItem(1)
 
         this.#_controllers[direction].changeItem()
         
