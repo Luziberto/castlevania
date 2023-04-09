@@ -9,8 +9,8 @@
 
 .main-container-title {
     color: var(--theme-page-text-color);
-    font-size: 32px;
-    margin: 0;
+    font-size: 36px;
+    margin: 10px;
     padding: 0;
     font-weight: 300;
 }
@@ -53,7 +53,7 @@
 
 .main-content {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     gap: 20px;
 }
 
@@ -116,12 +116,14 @@
 }
 
 .main-content-side {
-    margin: 0 40px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     line-height: 30px;
     font-size: 15px;
+    font-weight: 500;
+    color: var(--theme-page-text-color);
+    margin-top: 24px;
 }
 
 .main-content-side-answer-percentage {
@@ -137,8 +139,15 @@
     margin-bottom: 0;
 }
 
-@media screen and (max-width:1024px) {
+.main-content-inner>div:first-child {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* @media screen and (max-width:1024px) {
         .main-content-side {
             display: none;
         }
-    }
+    } */

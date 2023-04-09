@@ -19,6 +19,7 @@
 
 .header-container-top-content {
     display: flex;
+    color:white;
     flex-direction: column;
     gap: 10px;
 }

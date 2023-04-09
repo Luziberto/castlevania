@@ -1,7 +1,16 @@
+import Carousel from './carousel.js'
+
 window.onload = () => {
-    includeHtml('navbar')
-    includeHtml('header')
-    includeHtml('main')
+    new Promise(resolve => {
+        includeHtml('navbar')
+        includeHtml('header')
+        includeHtml('main')
+        resolve()
+    }).then(() => {
+        Carousel()
+    })
+
+    
 }
 
 function includeHtml(id) {
