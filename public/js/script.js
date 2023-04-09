@@ -7,7 +7,10 @@ window.onload = () => {
         includeHtml('main')
         resolve()
     }).then(() => {
-        Carousel()
+        setTimeout(() => {
+            includeHtml('carousel')
+            Carousel()
+        }, 500)
     })
 
     
