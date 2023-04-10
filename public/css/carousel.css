@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: row;
     height: 360px;
-    position: relative;
-    max-width: 670px;
     overflow: hidden;
+    position: relative;
 }
 .carousel-overlay-content{
     text-align: start;
@@ -55,17 +54,18 @@
     background-color: var(--theme-page-background-color--secondary);
     border: 1px solid var(--theme-page-background-color--secondary);
     box-sizing: border-box;
-    width: 25%;
+    width: 100%;
 }
 .carousel-content {
     display: flex;
-    width: 400%;
+    max-width: 670px;
     transition: transform 0.5s ease;
 }
 
 .carousel-content-item img{
     height: 360px;
-    object-fit: fill;
+    object-fit: cover;
+    width: 670px;
 }
 .carousel-overlay{
     position: absolute;

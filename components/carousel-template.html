@@ -1,0 +1,39 @@
+<template id="template-carousel">
+    <div class="carousel-content"></div>
+    <div class="carousel-overlay">
+        <div class="carousel-overlay-controllers">
+            <div class="carousel-overlay-controller carousel-overlay-controller-previous">
+                <img src="public/svg/arrow-tiny.svg">
+            </div>
+            <div class="carousel-overlay-controller carousel-overlay-controller-next">
+                <img src="public/svg/arrow-tiny.svg">
+            </div>
+        </div>
+        <div class="carousel-overlay-info">
+            <div class="carousel-overlay-content">
+                <div class="carousel-overlay-content-inner">
+                </div>
+            </div>
+            <div class="carousel-overlay-preview"></div>
+        </div>
+    </div>
+
+</template>
+
+<template id="template-carousel-content-item">
+    <div class="carousel-content-item">
+        <img src="{img_url}">
+    </div>
+</template>
+
+<template id="template-carousel-overlay-content-inner">
+    <h2><b>{title}</b></h2>
+    <p>{description}</p>
+    <a class="content-link" href="{link}">Read more ></a>
+</template>
+
+<template id="template-carousel-overlay-preview-item">
+    <div class="carousel-overlay-preview-item">
+        <img src="{img_url}">
+    </div>
+</template>

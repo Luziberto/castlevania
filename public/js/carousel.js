@@ -1,18 +1,9 @@
-export default function init() {
-    setTimeout(() => {
-        const carousel = new Carousel()
-    }, 300)
-    
-}
-
-class Carousel {
-    #_id;
+export class Carousel {
+    #_root;
     #_controllers;
     _currentItem = 1;
-    #_lastItem = 4;
     _items = [];
     #_elements = {
-        el: null,
         content: {
             el: null,
         },
@@ -35,9 +26,9 @@ class Carousel {
         }
     }
 
-    constructor() {
-        this.#_id = 'carousel'
-
+    constructor(root, items) {
+        this.#_root = root
+        this._items = items
         this.#_controllers = {
             previous: {
                 changeItem: () => this.changeItem(this._currentItem - 1) 
@@ -47,32 +38,7 @@ class Carousel {
             }
         }
 
-        this._items = [
-            {
-                image: 'public/images/Grimoire_of_Souls_-_03.webp',
-                title: 'Grimoire of Souls returns!',
-                description: 'Now available on your favorite Apple device.',
-                link: '#'
-            },
-            {
-                image: 'public/images/Castlevania_Advance_Collection_-_03.webp',
-                title: 'Castlevania Advance Collection',
-                description: 'A new Castlevania compilation that includes the three GBA titles, as well as Dracula X.',
-                link: '#'
-            },
-            {
-                image: 'public/images/Season4PromoNetflix.PNG.webp',
-                title: 'Castlevania Season 4',
-                description: 'The new season of the animated series is now available on Netflix!',
-                link: '#'
-            },
-            {
-                image: 'public/images/Castlevania_-_Moonlight_Rhapsody_-_02.webp',
-                title: 'Castlevania: Moonlight Rhapsody',
-                description: 'The first Konami licensed Castlevania game for the Chinese mobile market.',
-                link: '#'
-            },
-        ]
+        this._items = items
         this.init()
         
     }
@@ -81,45 +47,44 @@ class Carousel {
         this._currentItem = value
     }
 
-    init() {
-        this.#_elements.el = document.getElementById('carousel')
-        this.#_elements.overlay.el = document.querySelector('.carousel-overlay')
-        this.#_elements.overlay.content.el = document.querySelector('.carousel-content')
-        this.#_elements.overlay.controllers.previous = document.getElementById(`carousel-overlay-controller-previous`)
-        this.#_elements.overlay.controllers.next = document.getElementById(`carousel-overlay-controller-next`)
-        this.#_elements.overlay.preview.items = document.getElementsByClassName(`carousel-overlay-preview-item`)
-        this.#_elements.content.el = document.querySelector('.carousel-content')
+    async init() {
+        await this.generateHtml()
+        await this.setElements()
+        await this.setEvents()
         
-        this.#_elements.el.addEventListener('mouseenter', () => this.#_elements.overlay.el.classList.add('carousel-overlay--hover'))
-        this.#_elements.el.addEventListener('mouseleave', () => this.#_elements.overlay.el.classList.remove('carousel-overlay--hover'))
-
-        this.#_elements.overlay.controllers.previous.addEventListener('click', () => {
-            this.moveSlide('previous')
-        })
-        this.#_elements.overlay.controllers.next.addEventListener('click', () => {
-            this.moveSlide('next')
-        })
-
-        Array.from(this.#_elements.overlay.preview.items).forEach((preview, index) => preview.addEventListener('click', () => {
-            this.changeItem(index + 1)
-        }))
-
-        setInterval(() => {
-            this.moveSlide('next')
-        }, 5000)
-        
+        this.#_root.classList.add('carousel')
+        this.#_root.style.display = 'block'
         this.changeItemContent(1)
         
     }
 
-    moveSlide(direction) {
-        if (this._currentItem === 1 && direction === 'previous') return this.changeItem(this.#_lastItem)
+    setElements() {
+        this.#_elements.overlay.el = this.#_root.querySelector(`.carousel-overlay`)
+        this.#_elements.overlay.content.el = this.#_root.querySelector(`.carousel-content`)
+        this.#_elements.overlay.controllers.previous = this.#_root.querySelector(`.carousel-overlay-controller.carousel-overlay-controller-previous`)
+        this.#_elements.overlay.controllers.next = this.#_root.querySelector(`.carousel-overlay-controller.carousel-overlay-controller-next`)
+        this.#_elements.overlay.preview.items = this.#_root.querySelectorAll(`.carousel-overlay-preview-item`)
+        this.#_elements.content.el = this.#_root.querySelector(`.carousel-content`)
+    }
+    
+    setEvents() {
+        this.#_root.addEventListener('mouseenter', () => this.#_elements.overlay.el.classList.add('carousel-overlay--hover'))
+        this.#_root.addEventListener('mouseleave', () => this.#_elements.overlay.el.classList.remove('carousel-overlay--hover'))
+        this.#_elements.overlay.controllers.previous.addEventListener('click', () => { this.moveSlide('previous') })
+        this.#_elements.overlay.controllers.next.addEventListener('click', () => { this.moveSlide('next') })
+        Array.from(this.#_elements.overlay.preview.items).forEach((preview, index) => preview.addEventListener('click', () => { this.changeItem(index + 1) }))
+        setInterval(() => this.moveSlide('next'), 5000)
+    }
 
-        if (this._currentItem === this.#_lastItem && direction === 'next') return this.changeItem(1)
+    moveSlide(direction) {
+        if (this._currentItem === 1 && direction === 'previous') return this.changeItem(this._items.length)
+
+        if (this._currentItem === this._items.length && direction === 'next') return this.changeItem(1)
 
         this.#_controllers[direction].changeItem()
         
     }
+
     changeItem(item) {
         this.translateItem(item)
         this.changePreviewItem(item)
@@ -127,13 +92,29 @@ class Carousel {
         this._currentItem = item
     }
 
+    generateHtml() {
+        const template = document.getElementById('template-carousel').content.cloneNode(true)
+        // template.querySelector('.carousel-content').innerHTML = document.getElementById('template-carousel-content-item').content.cloneNode(true)
+        let content = ''
+        let previewContent = ''
+        const previewItemTemplate = document.getElementById('template-carousel-overlay-preview-item').innerHTML
+        const contentitemTemplate = document.getElementById('template-carousel-content-item').innerHTML
+        this._items.forEach((item, index) => {
+            previewContent += previewItemTemplate.replace('{img_url}', item.image)
+            content += contentitemTemplate.replace('{img_url}', item.image)
+        })
+        template.querySelector('.carousel-overlay-preview').innerHTML = previewContent
+        template.querySelector('.carousel-content').innerHTML = content
+        this.#_root.appendChild(template)
+        
+    }
     changeItemContent(item) {
-        const newContent = document.querySelector('#carousel-overlay-content-item').innerHTML
+        const newContent = document.getElementById('template-carousel-overlay-content-inner').innerHTML
             
-        document.querySelector('.carousel-overlay-content-item').innerHTML = newContent
-            .replace('{{overlay-content-title}}', this._items[item - 1].title)
-            .replace('{{overlay-content-description}}', this._items[item - 1].description)
-            .replace('{{overlay-content-link}}', this._items[item - 1].link)
+        this.#_root.querySelector(`.carousel-overlay-content-inner`).innerHTML = newContent
+            .replace('{title}', this._items[item - 1].title)
+            .replace('{description}', this._items[item - 1].description)
+            .replace('{link}', this._items[item - 1].link)
     }
 
     changePreviewItem(item) {
@@ -142,6 +123,6 @@ class Carousel {
     }
 
     translateItem(item) {
-        this.#_elements.content.el.style.transform = `translateX(calc(${-item + 1} * 25%))`
+        this.#_elements.content.el.style.transform = `translateX(calc(${-item + 1} * 100%))`
     }
 }
