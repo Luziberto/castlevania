@@ -25,6 +25,16 @@ const items = [
     },
 ];
 
+const config = {
+    autoplay: true,
+    autoplaySpeed: 5000,
+    speed: 300,
+    cssEase: 'linear',
+    description: {
+        hidden: true
+    }
+}
+
 window.onload = () => {
     new Promise(async resolve => {
         await includeHtml('carousel-template')
@@ -33,7 +43,7 @@ window.onload = () => {
         await includeHtml('main')
         resolve()
     }).then(() => {
-        document.getElementById('carousel').carousel(items)
+        const carousel = document.getElementById('carousel').carousel(items, config)
     })
 }
 
