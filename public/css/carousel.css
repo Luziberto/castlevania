@@ -1,7 +1,6 @@
 .carousel{
     display: flex;
     flex-direction: row;
-    height: 360px;
     overflow: hidden;
     position: relative;
 }
@@ -55,6 +54,7 @@
     border: 1px solid var(--theme-page-background-color--secondary);
     box-sizing: border-box;
     width: 100%;
+    display:flex;
 }
 .carousel-content {
     display: flex;
@@ -63,8 +63,9 @@
 }
 
 .carousel-content-item img{
-    height: 360px;
-    object-fit: cover;
+    /* height: 360px; */
+    text-align: center;
+    object-fit: contain;
     width: 670px;
 }
 .carousel-overlay{

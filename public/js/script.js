@@ -1,5 +1,3 @@
-import { Carousel } from './carousel.js'
-
 const items = [
     {
         image: 'public/images/Grimoire_of_Souls_-_03.webp',
@@ -28,22 +26,20 @@ const items = [
 ];
 
 window.onload = () => {
-    new Promise(resolve => {
+    new Promise(async resolve => {
+        await includeHtml('carousel-template')
         includeHtml('navbar')
         includeHtml('header')
-        includeHtml('main')
-        includeHtml('carousel-template')
+        await includeHtml('main')
         resolve()
     }).then(() => {
-        setTimeout(() => {
-            new Carousel(document.getElementById('carousel'), items)
-        }, 500)
+        document.getElementById('carousel').carousel(items)
     })
 }
 
-function includeHtml(id) {
+async function includeHtml(id) {
     const el = document.getElementById(id)
-    fetch(`components/${el.getAttribute('include-html')}`)
+    await fetch(`components/${el.getAttribute('include-html')}`)
         .then(res => res.text())
         .then(data => {
             el.innerHTML = data

@@ -53,7 +53,6 @@ export class Carousel {
         await this.setEvents()
         
         this.#_root.classList.add('carousel')
-        this.#_root.style.display = 'block'
         this.changeItemContent(1)
         
     }
@@ -125,4 +124,9 @@ export class Carousel {
     translateItem(item) {
         this.#_elements.content.el.style.transform = `translateX(calc(${-item + 1} * 100%))`
     }
+}
+
+
+HTMLElement.prototype.carousel = function (items) {
+    return new Carousel(this, items)
 }
