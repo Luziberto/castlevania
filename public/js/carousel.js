@@ -3,13 +3,14 @@ class Slide {
     _title;
     _description;
     _link;
+    _template;
     
     constructor(slide) {
         this._image = slide.image
         this._title = slide.title
         this._description = slide.description
         this._link = slide.link
-        this. _template = slide.template || document.getElementById('template-carousel-content-item')
+        this._template = slide.template
     }
 }
 class SlideGallery {
@@ -21,8 +22,8 @@ class SlideGallery {
         cssEase: 'linear'
     }
 
-    constructor(root, slides, config) {
-        this._items = slides.map(slide => new Slide(slide))
+    constructor(root, slides, config, template) {
+        this._items = slides.map(slide => new Slide({ ...slide, template }))
         this._config = {...this._config, ...config}
         this.#generate(root)
     }
@@ -30,6 +31,7 @@ class SlideGallery {
     #generate(root) {
         let content = ''
         this._items.forEach((item) => {
+            console.log(item)
             const contentitemTemplate = item._template.innerHTML
             content += contentitemTemplate.replace('{img_url}', item._image)
         })
@@ -55,22 +57,16 @@ class SlideGallery {
     }
 
     #move(item) {
-        console.log(this._config)
         this.#_root.style.transitionDuration = `${this._config.speed}ms`
         this.#_root.style.transitionTimingFunction = this._config.cssEase
         this.#_root.style.transform = `translateX(calc(${-item + 1} * 100%))`
     }
 }
-class Carousel {
+class Carousel{
     _slideGallery;
     #_root;
     _currentItem = 1;
-    #_templates = {
-        carousel: document.getElementById('template-carousel'),
-        contentItem: document.getElementById('template-carousel-content-item'),
-        overlayContentInner: document.getElementById('template-carousel-overlay-content-inner'),
-        overlayPreviewItem: document.getElementById('template-carousel-overlay-preview-item')
-    };
+    #_templates;
     _config = {
         autoplay: true,
         autoplaySpeed: 5000,
@@ -91,16 +87,18 @@ class Carousel {
         }
     }
 
-    constructor(root, items, config) {
+    constructor(root, items, config, templates) {
+        // super()
         this.#_root = root
-        this._config = {...this._config, ...config}
+        this._config = { ...this._config, ...config }
+        this.#_templates = templates
         this.#initConfig(items)
         this.#start(items)
     }
 
     async #initConfig(items) {
         this.#generateRootHtml()
-        this._slideGallery = new SlideGallery(this.#_root, items, { speed: this._config.speed, cssEase: this._config.cssEase })
+        this._slideGallery = new SlideGallery(this.#_root, items, { speed: this._config.speed, cssEase: this._config.cssEase }, this.#_templates.contentItem)
         this.#generatePreviewHtml()
         this.#setElements()
         this.#setEvents()
@@ -166,12 +164,39 @@ class Carousel {
     #changeItemContent(item) {
         if (this._config.description?.hidden) return this.#_elements.overlay.content.classList.add('hidden')
         this.#_root.querySelector(`.carousel-overlay-content-inner`).innerHTML = this.#_templates.overlayContentInner.innerHTML
-            .replace('{title}', this._slideGallery._items[item - 1]._title)
-            .replace('{description}', this._slideGallery._items[item - 1]._description)
-            .replace('{link}', this._slideGallery._items[item - 1]._link)
+            .replace('{title}', this._slideGallery._items[item - 1]._title || '')
+            .replace('{description}', this._slideGallery._items[item - 1]._description || '')
+            .replace('{link}', this._slideGallery._items[item - 1]._link || '#')
     }
 }
 
-HTMLElement.prototype.carousel = function (items, config) {
-    return new Carousel(this, items, config)
+HTMLElement.prototype.carousel = function (items = [], config = {}) {
+    if (!this.carouselInstance) Object.defineProperties(this, { carouselInstance: { value: new Carousel(this, items, config, initTemplates()), writable: false } })
+    
+    return this.carouselInstance
 }
+
+const initTemplates = () => {
+    const mainEl = createTemplate(mainTemplate)
+    const contentItemEl = createTemplate(contentItemTemplate)
+    const overlayContentEl = createTemplate(overlayContentTemplate)
+    const overlayPreviewItemEl = createTemplate(overlayPreviewItemTemplate)
+    
+    return {
+        carousel: mainEl,
+        contentItem: contentItemEl,
+        overlayContentInner: overlayContentEl,
+        overlayPreviewItem: overlayPreviewItemEl
+    }
+}
+
+const createTemplate = (template) => {
+    const el = document.createElement('template')
+    el.innerHTML = template
+    return el
+}
+
+const mainTemplate = `<div class="carousel-content"></div><div class="carousel-overlay"><div class="carousel-overlay-controllers"><div class="carousel-overlay-controller carousel-overlay-controller-previous"><img src="public/svg/arrow-tiny.svg"></div><div class="carousel-overlay-controller carousel-overlay-controller-next"><img src="public/svg/arrow-tiny.svg"></div></div><div class="carousel-overlay-info"><div class="carousel-overlay-content"><div class="carousel-overlay-content-inner"></div></div><div class="carousel-overlay-preview"></div></div></div>`
+const contentItemTemplate = `<div class="carousel-content-item"><img src="{img_url}"></div>`
+const overlayContentTemplate = `<h2><b>{title}</b></h2><p>{description}</p><a class="content-link" href="{link}">Read more ></a>`
+const overlayPreviewItemTemplate = `<div class="carousel-overlay-preview-item"><img src="{img_url}"></div>`
